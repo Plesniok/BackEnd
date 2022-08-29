@@ -1,12 +1,17 @@
 // index.js
 // Import the fastify framework
-const fastify = require('fastify')
-const app = fastify()
+console.log(__dirname)
+const app = require('fastify')()
+//const app = fastify()
 const exampleApi = require('./api/example')
 require('dotenv').config()
 const Joi = require('joi')
 const {schemasBodie} = require('./reqValidation/exampleValidation')
 const myError = require('./scripts/myError')
+const logger = require('./scripts/log')
+
+app.register(require('@fastify/middie'))
+//app.use(logTracker())
 //endpoints
 app.get('/',schemasBodie.getExample,exampleApi.helloWorld)
 app.post('/test', {

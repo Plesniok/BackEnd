@@ -1,5 +1,6 @@
 const exampleServiceIstance = require('../service/exampleService')
 const {encrypt, decrypt} = require('../safety/crypto')
+const logger = require('../scripts/log')
 
 class exampleApi{
     async helloWorld (req, res) {
@@ -23,7 +24,7 @@ class exampleApi{
             errorMessage: errorMessage,
             responseMessage: resMessage
         }
-        console.log(resBody)
+        logger.info(`${req.loggerID} - ${errorCode} - ${errorMessage} - ${resMessage}`)
         res
         .code(statusCode)
         .header('Content-Type', 'application/json')
