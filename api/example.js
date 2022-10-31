@@ -10,21 +10,21 @@ class exampleApi{
         let resMessage = null
 
         if(req.validationError){
+
+            errorCode = req.validationError.messageID
             statusCode = req.validationError.code
             errorMessage = req.validationError.errorMessage
         }
         else{
             [statusCode, errorCode,errorMessage, resMessage] = await exampleServiceIstance.example(req.query)
-            console.log(statusCode, errorMessage, resMessage)
-            //console.log(resMessage,'dadas')
         }
-        //resBody = enc(JSON.stringify(resBody))
         let resBody = {
+            statusCode: statusCode,
             errorCode: errorCode,
             errorMessage: errorMessage,
             responseMessage: resMessage
         }
-        logger.info(`${req.loggerID} - ${errorCode} - ${errorMessage} - ${resMessage}`)
+        logger.info(`${statusCode} - ${errorCode} - ${errorMessage}`)
         res
         .code(statusCode)
         .header('Content-Type', 'application/json')

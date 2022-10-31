@@ -1,36 +1,29 @@
 // index.js
 // Import the fastify framework
-console.log(__dirname)
 const app = require('fastify')()
 //const app = fastify()
 const exampleApi = require('./api/example')
+const userApi = require('./api/users')
+const conversationsApi = require('./api/conversations')
+const messagesApi = require('./api/messages')
 require('dotenv').config()
 const Joi = require('joi')
-const {schemasBodie} = require('./reqValidation/exampleValidation')
+const {schemasBodies} = require('./reqValidation/validation')
 const myError = require('./scripts/myError')
 const logger = require('./scripts/log')
 
 app.register(require('@fastify/middie'))
 //app.use(logTracker())
 //endpoints
-app.get('/',schemasBodie.getExample,exampleApi.helloWorld)
-app.post('/test', {
-    schema: {
-      body: Joi.object().keys({
-        hello: Joi.string().error(new myError(406, '00002', 'Invalid example id', 'empty')).required()
-      }).required()
-    },
-    attachValidation: true,
-    validatorCompiler: ({schema}) => {
-      return data => {
-        console.log(data)
-        return schema.validate(data.payload)
-      }
-    }
-  }, (request) => {
-    console.log(request.validationError)
-    return "done"
-  })
+//app.get('/',schemasBodies.getExample,exampleApi.helloWorld)
+app.register(require('@fastify/formbody'))
+app.post('/user',schemasBodies.addUser,userApi.addUser)
+app.get('/user',schemasBodies.getUser,userApi.getUser)
+app.get('/conversations',schemasBodies.getConversation,conversationsApi.getConversation)
+app.get('/messages',schemasBodies.getMessages,messagesApi.getMessages)
+
+
+
   
   app.inject({
     method: 'POST',

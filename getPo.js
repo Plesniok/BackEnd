@@ -4,7 +4,7 @@ const fetch = require('node-fetch');
 
 jsonTest = encrypt(JSON.stringify(jsonTest))
 console.log(jsonTest)
-var res = fetch('http://127.0.0.1:3003?' + new URLSearchParams({
+var res = fetch('http://127.0.0.1:3003/user?' + new URLSearchParams({
    payload: jsonTest
 }))
 .then(res => res.json())
