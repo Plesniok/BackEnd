@@ -1,8 +1,10 @@
 'use strict'
-require('dotenv').config({ path:'C:/Users/damia/Desktop/flutterApps/mess/backend2/.env' })
+const rootDir = require('path').resolve('./');
+require('dotenv').config({ path: rootDir + '/config/.env' })
 const crypto = require("crypto")
 const myError = require('../scripts/myError')
 const algorithm = "aes-256-cbc"
+console.log() 
 const encrypt = (message) => {
     try{
         const cipher = crypto.createCipheriv(algorithm, process.env.SECURITY_KEY,  process.env.IV)
@@ -22,7 +24,7 @@ const decrypt = (message) => {
         const decipher = crypto.createDecipheriv(algorithm, process.env.SECURITY_KEY,  process.env.IV)
         let decryptedMessage = decipher.update(message, "base64", "utf-8")
         decryptedMessage += decipher.final("utf-8")
-        //console.log("Decrypted message: " + decryptedMessage);
+        console.log("Decrypted message: " + decryptedMessage);
         return decryptedMessage.toString()
     } catch (err) {
         throw new myError(400, '04005', 'Problems with payload decryption', 'Problems with payload decryption', err.stack);

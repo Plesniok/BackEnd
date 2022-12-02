@@ -11,7 +11,7 @@ const Joi = require('joi')
 const {schemasBodies} = require('./reqValidation/validation')
 const myError = require('./scripts/myError')
 const logger = require('./scripts/log')
-
+const ConversationsServiceInstance = require('./service/conversationsService')
 app.register(require('@fastify/middie'))
 //app.use(logTracker())
 //endpoints
@@ -32,9 +32,10 @@ app.get('/messages',schemasBodies.getMessages,messagesApi.getMessages)
   })
 
 //server listen
-app.listen(parseInt(process.env.HTTP_PORT), function (err, address) {
+app.listen(parseInt(process.env.HTTP_PORT),'0.0.0.0' ,function (err, address) {
     if (err) {
         console.error(err)
+        console.log('got errir')
         process.exit(1)
     }
     console.log(`Server listening on ${address}`)

@@ -1,0 +1,8 @@
+Stworzenie pliku dla tabeli w migracjach:
+	npx knex migrate:make <filename>
+Uruchomienie migracji:
+	npx knex migrate:latest
+Wywołanie funkcji up (tej pierwszej w pliku):
+	npx knex migrate:up <filename>.js
+Wywołanie funkcji down (tej drugiej w pliku):
+	npx knex migrate:down <filename>.js
